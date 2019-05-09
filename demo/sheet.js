@@ -1,12 +1,12 @@
-window.onload = () => {
-    const data = [
-        ['', 'Ford', 'Tesla', 'Toyota', 'Honda'],
-        ['2017', 10, 11, '2017-01-01', 13],
-        ['2018', 20, 11, '2018-12-12', 13],
-        ['2018', 30, 11, '12-12-2018', 13],
-        ['2019', 40, 15, '2019-30-30', 13]
-    ];
+const data = [
+    ['', 'Ford', 'Tesla', 'Toyota', 'Honda'],
+    ['2017', 10, 11, '2017-01-01', 13],
+    ['2018', 20, 11, '2018-12-12', 13],
+    ['2018', 30, 11, '12-12-2018', 13],
+    ['2019', 40, 15, '2019-30-30', 13]
+];
 
+window.onload = () => {
     const container = document.getElementById('sheet');
     const hot = new Handsontable(container, {
         data: data,
@@ -26,11 +26,18 @@ const tfx = {};
 
 window.tfx = tfx;
 
+const getLastRowNumber = () => window.hot.getData().length;
+const getLastColumnLetter = () => String.fromCharCode('A'.charCodeAt(0) + window.hot.getData()[0].length - 1)
+
 function getColumnIndex(columnLetter) {
     const charCode = columnLetter.charCodeAt(0);
     const charCodeForA = 'a'.charCodeAt(0);
     const charCodeForCapitalA = 'A'.charCodeAt(0);
     return charCode >= charCodeForA ? charCode - charCodeForA : charCode - charCodeForCapitalA;
+}
+
+function isCell(element) {
+    return Number.isInteger(element[1]);
 }
 
 function getRowIndex(rowLetter) {
@@ -43,17 +50,28 @@ function parseCell(cell) {
     return [getRowIndex(rowLetter), getColumnIndex(columnLetter)];
 }
 
+const rangeSeparator = ':';
+
 function isRange(element) {
-    return element.indexOf(':') > 0;
+    return element.indexOf(rangeSeparator) > 0;
 }
 
 function parseRange(element) {
     let start, end;
     if (isRange(element)) {
-        [start, end] = element.split(':');
-    } else {
+        [start, end] = element.split(rangeSeparator);
+    } else if (isCell(element)) {
         start = element;
         end = element;
+    } else { // is row number or is columnLetter
+        if (Number.isInteger(parseInt(element))) {
+            element = parseInt(element);
+            start = `A${element}`;
+            end = `${getLastColumnLetter()}${element}`;
+        } else {
+            start = `${element}1`;
+            end = `${element}${getLastRowNumber()}`
+        }
     }
     start = parseCell(start);
     end = parseCell(end);
