@@ -54,20 +54,19 @@
         <button class="d2l-dropdown-opener">Format</button>
         <d2l-dropdown-menu id="dropdown">
             <d2l-menu label="Format">
-                <d2l-menu-item text="Direction" id="first-item"></d2l-menu-item>
-                <d2l-menu-item text="Number">
-                    <d2l-menu>
-                        <d2l-menu-item text="Plain text" onclick="tfx.format('current', 'text')"></d2l-menu-item>
-                        <d2l-menu-item text="Number" onclick="tfx.format('current', 'numeric')"></d2l-menu-item>
-                        <d2l-menu-item text="Date" onclick="tfx.format('current', 'date')"></d2l-menu-item>
-                    </d2l-menu>
+                <d2l-menu-item id="first-item" text="Plain text" onclick="tfx.format('current', 'text')">
                 </d2l-menu-item>
+                <d2l-menu-item text="Number" onclick="tfx.format('current', 'numeric')"></d2l-menu-item>
+                <d2l-menu-item text="Date" onclick="tfx.format('current', 'date')"></d2l-menu-item>
+                </d2l-menu-item>
+            </d2l-menu>
         </d2l-dropdown-menu>
     </d2l-dropdown>
 
 
     <div class="vd-container"></div>
     <div class="vd"></div>
+    <br/>
     <div id="sheet"></div>
 </body>
 
