@@ -96,3 +96,17 @@ tfx.format = (selection, type) => {
     window.hot.validateCells();
     window.hot.render();
 };
+
+tfx.insert = (element, position) => {
+    position = position === 'before' ? 0 : 1;
+    let action, index;
+    if (Number.isInteger(element)) {
+        action = 'insert_row';
+        index = element - 1 + position;
+    } else {
+        action = 'insert_col';
+        index = getColumnIndex(element) + position;
+    }
+
+    window.hot.alter(action, index);
+};
