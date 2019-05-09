@@ -97,16 +97,19 @@ tfx.format = (selection, type) => {
     window.hot.render();
 };
 
-tfx.insert = (element, position) => {
+const alter = type => (element, position) => { 
     position = position === 'before' ? 0 : 1;
     let action, index;
     if (Number.isInteger(element)) {
-        action = 'insert_row';
+        action = `${type}_row`;
         index = element - 1 + position;
     } else {
-        action = 'insert_col';
+        action = `${type}_col`;
         index = getColumnIndex(element) + position;
     }
 
     window.hot.alter(action, index);
 };
+
+tfx.insert = alter('insert');
+tfx.delete = element => alter('remove')(element, 'before');
