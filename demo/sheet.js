@@ -3,7 +3,8 @@ window.onload = () => {
         ['', 'Ford', 'Tesla', 'Toyota', 'Honda'],
         ['2017', 10, 11, '2017-01-01', 13],
         ['2018', 20, 11, '2018-12-12', 13],
-        ['2019', 30, 15, '2019-30-30', 13]
+        ['2018', 30, 11, '12-12-2018', 13],
+        ['2019', 40, 15, '2019-30-30', 13]
     ];
 
     const container = document.getElementById('sheet');
@@ -13,6 +14,7 @@ window.onload = () => {
         colHeaders: true,
         filters: true,
         dropdownMenu: true,
+        columnSorting: true,
         outsideClickDeselects: false,
         licenseKey: 'non-commercial-and-evaluation'
     });
@@ -113,3 +115,5 @@ const alter = type => (element, position) => {
 
 tfx.insert = alter('insert');
 tfx.delete = element => alter('remove')(element, 'before');
+
+tfx.sort = (columnLetter, order='asc') => window.hot.getPlugin('columnSorting').sort({ column: getColumnIndex(columnLetter), sortOrder: order });
