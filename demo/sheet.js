@@ -120,9 +120,9 @@ tfx.format = (selection, type) => {
 const alter = type => (element, position) => { 
     position = position === 'before' ? 0 : 1;
     let action, index;
-    if (Number.isInteger(element)) {
+    if (Number.isInteger(parseInt(element))) {
         action = `${type}_row`;
-        index = element - 1 + position;
+        index = parseInt(element) - 1 + position;
     } else {
         action = `${type}_col`;
         index = getColumnIndex(element) + position;
