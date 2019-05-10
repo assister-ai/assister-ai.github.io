@@ -32,12 +32,9 @@ window.onload = () => {
 
         if (event.data.type && (event.data.type === "FROM_SANAZ")) {
             console.log("App received: " + JSON.stringify(event.data));
-            if(tfx.hasOwnProperty(event.data.command)){
-                const [command, ...args] = event.data.command;
-                if (tfx[command]) {
-                    tfx[command](...args)
-                }
-                
+            const [command, ...args] = event.data.command;
+            if (tfx[command]) {
+                tfx[command](...args)
             }
         }
     }, false);
