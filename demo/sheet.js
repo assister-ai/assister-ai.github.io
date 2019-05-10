@@ -31,8 +31,8 @@ window.onload = () => {
             return;
 
         if (event.data.type && (event.data.type === "FROM_SANAZ")) {
-            console.log("App received: " + JSON.stringify(event.data));
-            const [command, ...args] = event.data.command.split(' ');
+            const input = event.data.command.trimStart().trimEnd().split(' ');
+            const [command, ...args] = input;
             if (tfx[command]) {
                 tfx[command](...args)
             }
