@@ -149,4 +149,4 @@ const alter = type => (position, element) => {
 tfx.insert = alter('insert');
 tfx.delete = element => alter('remove')('before', element);
 
-tfx.sort = (columnLetter, order='asc') => window.hot.getPlugin('columnSorting').sort({ column: getColumnIndex(columnLetter), sortOrder: order });
+tfx.sort = (columnLetter, order='ascending') => window.hot.getPlugin('columnSorting').sort({ column: getColumnIndex(columnLetter), sortOrder: order == 'ascending' ? 'asc' : 'desc' });
