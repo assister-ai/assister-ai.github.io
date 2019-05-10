@@ -102,8 +102,9 @@ tfx.select = selection => {
 };
 
 tfx.format = (selection, type) => {
-    if (!selection) {
-        return;
+    if (selection === 'date') {
+        type = selection;
+        selection = 'current';
     }
     selection = selection === 'current' ? window.hot.getSelected() : parseSelection(selection);
     const typeConfigs = {
@@ -131,7 +132,7 @@ tfx.format = (selection, type) => {
     window.hot.render();
 };
 
-const alter = type => (element, position) => { 
+const alter = type => (position, element) => { 
     position = position === 'before' ? 0 : 1;
     let action, index;
     if (Number.isInteger(parseInt(element))) {
