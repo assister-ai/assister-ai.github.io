@@ -1,3 +1,7 @@
+const tfx = {};
+
+window.tfx = tfx;
+
 const data = [
     ['', 'Ford', 'Tesla', 'Toyota', 'Honda'],
     ['2017', 10, 11, '2017-01-01', 13],
@@ -20,11 +24,24 @@ window.onload = () => {
     });
     window.Handsontable = Handsontable;
     window.hot = hot;
+
+    window.addEventListener("message", function (event) {
+        // We only accept messages from ourselves
+        if (event.source !== window)
+            return;
+
+        if (event.data.type && (event.data.type === "FROM_SANAZ")) {
+            console.log("App received: " + JSON.stringify(event.data));
+            if(tfx.hasOwnProperty(event.data.command)){
+                const [command, ...args] = event.data.command;
+                if (tfx[command]) {
+                    tfx[command](...args)
+                }
+                
+            }
+        }
+    }, false);
 };
-
-const tfx = {};
-
-window.tfx = tfx;
 
 const getLastRowNumber = () => window.hot.getData().length;
 const getLastColumnLetter = () => String.fromCharCode('A'.charCodeAt(0) + window.hot.getData()[0].length - 1)
